@@ -1,0 +1,8 @@
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\bin\Debug\Bubble.exe.config
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.csprojResolveAssemblyReference.cache
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.Properties.Resources.resources
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.csproj.GenerateResource.Cache
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\bin\Debug\Bubble.exe
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\bin\Debug\Bubble.pdb
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.exe
+c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.pdb

@@ -13,8 +13,9 @@ namespace Bubble
 
         public static void addServer(String serverName, Object serverClass)
         {
-            foreach (var item in liveServerManager)
+            for (int i = liveServerManager.Count - 1; i >= 0; i--)
             {
+                var item = liveServerManager.ElementAt(i);
                 if (item.Key.Equals(serverName))
                 {
                     liveServerManager.Remove(item.Key);

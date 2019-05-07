@@ -266,7 +266,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 10;
-            this.button2.Text = "恢复默认";
+            this.button2.Text = "default";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -290,11 +290,11 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(50, 148);
+            this.label16.Location = new System.Drawing.Point(36, 148);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 12);
+            this.label16.Size = new System.Drawing.Size(71, 12);
             this.label16.TabIndex = 22;
-            this.label16.Text = "弹幕宽度";
+            this.label16.Text = "SliderWidth";
             // 
             // label14
             // 
@@ -320,7 +320,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(53, 12);
             this.label13.TabIndex = 19;
-            this.label13.Text = "字体大小";
+            this.label13.Text = "FontSize";
             // 
             // label12
             // 
@@ -385,20 +385,20 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(26, 105);
+            this.label9.Location = new System.Drawing.Point(21, 105);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 12);
+            this.label9.Size = new System.Drawing.Size(89, 12);
             this.label9.TabIndex = 12;
-            this.label9.Text = "弹幕淡出时间";
+            this.label9.Text = "SliderShadeOut";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(26, 59);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(77, 12);
+            this.label7.Size = new System.Drawing.Size(83, 12);
             this.label7.TabIndex = 8;
-            this.label7.Text = "弹幕淡入时间";
+            this.label7.Text = "SliderShadeIn";
             // 
             // label5
             // 
@@ -422,9 +422,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(44, 38);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.Size = new System.Drawing.Size(47, 12);
             this.label4.TabIndex = 2;
-            this.label4.Text = "弹幕Y偏移";
+            this.label4.Text = "SliderY";
             // 
             // label8
             // 
@@ -433,16 +433,16 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 12);
             this.label8.TabIndex = 10;
-            this.label8.Text = "弹幕停留时间";
+            this.label8.Text = "SliderShaded";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(44, 16);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.Size = new System.Drawing.Size(47, 12);
             this.label3.TabIndex = 1;
-            this.label3.Text = "弹幕X偏移";
+            this.label3.Text = "SliderX";
             // 
             // hScrollBar1
             // 
@@ -482,22 +482,22 @@
             // checkBox5
             // 
             this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(443, 15);
+            this.checkBox5.Location = new System.Drawing.Point(456, 15);
             this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(72, 16);
+            this.checkBox5.Size = new System.Drawing.Size(66, 16);
             this.checkBox5.TabIndex = 28;
-            this.checkBox5.Text = "语音播报";
+            this.checkBox5.Text = "repoter";
             this.checkBox5.UseVisualStyleBackColor = true;
             this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(365, 15);
+            this.checkBox4.Location = new System.Drawing.Point(375, 15);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(72, 16);
+            this.checkBox4.Size = new System.Drawing.Size(54, 16);
             this.checkBox4.TabIndex = 27;
-            this.checkBox4.Text = "弹幕点歌";
+            this.checkBox4.Text = "music";
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
@@ -517,7 +517,7 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(60, 16);
             this.checkBox1.TabIndex = 8;
-            this.checkBox1.Text = "侧边栏";
+            this.checkBox1.Text = "Slider";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -577,9 +577,9 @@
         private System.Windows.Forms.HScrollBar hScrollBar2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
+        public System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;

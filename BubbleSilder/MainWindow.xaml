@@ -1,0 +1,12 @@
+﻿<Window x:Class="BubbleSilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BubbleSilder"
+        mc:Ignorable="d"
+        Title="MainWindow" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" Initialized="mainwindow_Initialized" SizeToContent="WidthAndHeight" Top="0" Left="0" Width="{Binding ActualWidth, ElementName=stackpanel, Mode=OneWay}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" Topmost="True" ShowInTaskbar="False" >
+
+    <StackPanel x:Name="stackpanel" x:FieldModifier="public" HorizontalAlignment="Left"  VerticalAlignment="Top" Initialized="stackpanel_Initialized" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"/>
+
+</Window>

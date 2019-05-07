@@ -7,23 +7,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Bubble.bilibili
+namespace Bubble
 {
-    class BiliBili
+    class BiliBili: LiveServerImp
     {
         TcpClient dmClient = null;
         NetworkStream netStream = null;
         String roomId;
-        private object connectresult;
 
         public BiliBili(String roomId)
         {
             this.roomId = roomId;
+
         }
 
         public async void run()
         {
-            bool result = await connect();
+            await connect();
 
         }
         public void stop()
@@ -49,7 +49,7 @@ namespace Bubble.bilibili
             connectToChannel();
             Thread x = new Thread(recevieMsg);
             x.Start();
-            heartBeatLoop();
+            bool result = await heartBeatLoop();
 
             return false;
         }
@@ -105,6 +105,7 @@ namespace Bubble.bilibili
             byte[] stableBuffer = new byte[dmClient.ReceiveBufferSize];
             while (dmClient.Connected)
             {
+                
                 netStream.readByte(stableBuffer, 0, 4);
                 var packetLength = BitConverter.ToInt32(stableBuffer, 0);
                 packetLength = IPAddress.NetworkToHostOrder(packetLength);
@@ -143,7 +144,7 @@ namespace Bubble.bilibili
                     case 4://audience Command, includes audience msg, gift msg and welcome msg.
                         {
                             var json = Encoding.UTF8.GetString(buffer, 0, playloadlength);
-                            Console.WriteLine(json);
+                            Console.WriteLine(Thread.CurrentThread.ManagedThreadId.ToString() + json);
                             break;
                         }
                     case 5://newScrollMessage
@@ -170,32 +171,39 @@ namespace Bubble.bilibili
             }
         }
 
-        private void heartBeatLoop()
+        private Task<bool> heartBeatLoop()
         {
-            try
+            var task = Task.Run(() =>
             {
-                while (dmClient.Connected)
+                try
                 {
-                    Send_Heart();
-                    Thread.Sleep(20000);
-                    
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("head beat error.");
-                Console.WriteLine(e);
+                    while (dmClient.Connected)
+                    {
+                        Send_Heart();
+                        Console.WriteLine(Thread.CurrentThread.ManagedThreadId.ToString() + " send heart");
+                        Thread.Sleep(20000);
 
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("head beat error.");
+                    Console.WriteLine(e);
+
+                }
+                return true;
             }
+            );
+            return task;
         }
 
-        private async void Send_Heart()
+        private void Send_Heart()
         {
             try
             {
                 byte[] data = { 0x00, 0x00, 0x00, 0x10, 0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x01 };
-                await netStream.WriteAsync(data, 0, data.Length);
-                await netStream.FlushAsync();
+                 netStream.Write(data, 0, data.Length);
+                 netStream.Flush();
             }
             catch (Exception e)
             {

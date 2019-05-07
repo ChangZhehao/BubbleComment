@@ -6,3 +6,6 @@ c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\bin\Debug\Bubbl
 c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\bin\Debug\Bubble.pdb
 c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.exe
 c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.pdb
+C:\Users\CZH\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.MainForm.resources
+C:\Users\CZH\Documents\Visual Studio 2015\Projects\Bubble\Bubble\bin\Debug\BubbleSilder.exe
+C:\Users\CZH\Documents\Visual Studio 2015\Projects\Bubble\Bubble\bin\Debug\BubbleSilder.pdb

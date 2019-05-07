@@ -6,11 +6,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Bubble
 {
-    class Twitch
+    class Twitch:LiveServerImp
     {
         TcpClient dmClient = null;
         NetworkStream netStream = null;
@@ -30,7 +32,6 @@ namespace Bubble
             this.roomId = roomId;
             this.token = token;
             privmsgRegex = new Regex($@":(?<nickname>[^!@:#\s]+)!(?<realname>[^!@:#\s]+)@(?<host>[^!@:#\s]+) PRIVMSG #{roomId} :(?<message>.+)", RegexOptions.Compiled);
-
         }
 
         public async void run()
@@ -50,7 +51,7 @@ namespace Bubble
             int serverPort = 6667;
             dmClient = new TcpClient();
 
-            Console.WriteLine("start to connect to server");
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId.ToString()+" start to connect to server");
             await dmClient.ConnectAsync(host, serverPort);
 
             netStream = dmClient.GetStream();
@@ -58,9 +59,13 @@ namespace Bubble
             var reader = new StreamReader(netStream);
             var writer = TextWriter.Synchronized(new StreamWriter(netStream) { AutoFlush = true, NewLine = "\r\n" });
 
+            Object obj = null;
+            FormUtil.formManager.TryGetValue("mainForm",out obj);
+            MainForm mainForm = (MainForm)obj;
+
             var listeningTask = Task.Run(async () =>
             {
-                while (true)
+                while (dmClient.Connected)
                 {
                     var receivedMessage = await reader.ReadLineAsync();
                     Console.WriteLine("> " + receivedMessage);
@@ -74,6 +79,7 @@ namespace Bubble
                     var privmsgMatch = privmsgRegex.Match(receivedMessage);
                     if (privmsgMatch.Success)
                     {
+                        mainForm.dm_invoke(EnumCommentType.MSG, privmsgMatch.Groups["nickname"].Value, privmsgMatch.Groups["message"].Value);
                         MessageReceived?.Invoke(privmsgMatch.Groups["nickname"].Value, privmsgMatch.Groups["message"].Value);
                     }
                 }
@@ -89,9 +95,13 @@ namespace Bubble
             await writer.WriteLineAsync($"JOIN #{roomId}");
             Console.WriteLine("entry in room");
 
-            listeningTask.Wait();
 
             return false;
+        }
+
+        public void stop()
+        {
+            dmClient.Close();
         }
     }
 }

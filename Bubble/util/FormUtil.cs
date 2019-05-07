@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Bubble
 {
-    static class FormManager
+    static class FormUtil
     {
-        public static Hashtable formManager = new Hashtable();
+        public static Dictionary<String,Object> formManager = new Dictionary<String,Object>();
 
     }
 }

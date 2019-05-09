@@ -84,23 +84,20 @@ namespace BubbleSilder
             }
             else if (type == Dm_Type.GIFT)
             {
-                //Console.WriteLine("收到礼物: " + name + msg + "\n");
-                dm_info.textblock.Inlines.Add(new Run("收到礼物: ") { Foreground = Brushes.Red });
+                dm_info.textblock.Inlines.Add(new Run("recevie gift: ") { Foreground = Brushes.Red });
                 dm_info.textblock.Inlines.Add(new Run(name + msg) { Foreground = Brushes.White });
 
             }
             else if (type == Dm_Type.WELCOME)
             {
-                //Console.WriteLine("欢迎老爷: " + name + "\n");
-                dm_info.textblock.Inlines.Add(new Run("欢迎老爷: ") { Foreground = Brushes.Red });
+                dm_info.textblock.Inlines.Add(new Run("VIP: ") { Foreground = Brushes.Red });
                 dm_info.textblock.Inlines.Add(new Run(name) { Foreground = Brushes.Yellow });
-                dm_info.textblock.Inlines.Add(new Run(" 进入直播间") { Foreground = Brushes.White });
+                dm_info.textblock.Inlines.Add(new Run(" entrys channel.") { Foreground = Brushes.White });
             }
             else if (type == Dm_Type.MSG)
             {
-                //Console.WriteLine("收到弹幕: " + name + "说: " + msg + "\n");
                 dm_info.textblock.Inlines.Add(new Run(name) { Foreground = Brushes.Yellow });
-                dm_info.textblock.Inlines.Add(new Run(" 说: " + msg) { Foreground = Brushes.White });
+                dm_info.textblock.Inlines.Add(new Run(" said: " + msg) { Foreground = Brushes.White });
             }
             else if (type == Dm_Type.DEBUG)
             {

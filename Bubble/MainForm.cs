@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bubble.util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +16,7 @@ namespace Bubble
 {
     public partial class MainForm : Form
     {
-        #region 全局变量和enum
+        
 
         public Speaker_DM speaker_dm;
 
@@ -27,7 +28,6 @@ namespace Bubble
             public int max_audience;
         }
 
-        #endregion
         public object Dispatcher { get; private set; }
 
         public MainForm()
@@ -41,8 +41,21 @@ namespace Bubble
             if (button1.Text == "connect")
             {
                 Console.WriteLine("the gui thread is: " + Thread.CurrentThread.ManagedThreadId.ToString());
-                Twitch twitch = new Twitch("shroud", "oauth:ngtb5qelxsp0anvaorv0x7y5ibmlgm");
-                LiveServerUtil.addServer("twitch", twitch);
+
+                LiveServerImp server = null;
+                switch (comboBox1.Text)
+                {
+                    case "bilibili":
+                        server = new BiliBili(textBox1.Text);
+                        LiveServerUtil.addServer("bilibili", server);
+                        break;
+                    case "twitch":
+                        server = new Twitch(textBox1.Text, "oauth:hwrxd2lx25h3i327bcm8u6w78lii9i");
+                        LiveServerUtil.addServer("twitch", server);
+                        break;
+                    default: return;
+                }
+                
                 //BiliBili bilibili = new BiliBili("5210066");
                 //LiveServerUtil.addServer("bilibili",bilibili);
                 LiveServerUtil.runAllServer();
@@ -62,7 +75,6 @@ namespace Bubble
             FormUtil.formManager.Add("mainForm", this);
         }
 
-        #region invoke 弹幕内容
         private delegate void dm_delegate(EnumCommentType dm_type, string name, string msg);
         public void dm_invoke(EnumCommentType dm_type, string name, string msg)
         {
@@ -124,15 +136,13 @@ namespace Bubble
 
                 if (dm_type == EnumCommentType.HEART)
                 {
-                    //Console.WriteLine("在线人数: " + msg + "\n");
-                    label1.Text = "在线人数: " + msg;
+                    label1.Text = "Watching Now: " + msg;
                     statistic(dm_type, msg);
 
                 }
                 else if (dm_type == EnumCommentType.GIFT)
                 {
-                    //Console.WriteLine("Gift: " + name + msg + "\n");
-                    richTextBox1.AppendText("收到礼物: " + name + msg + "\n");
+                    richTextBox1.AppendText("recevie gift: " + name + msg + "\n");
                     dm_gift_add_to_list(name, msg);
                 }
                 else if (dm_type == EnumCommentType.WELCOME)
@@ -176,7 +186,6 @@ namespace Bubble
                 Console.WriteLine("failed to dm_get()");
             }
         }
-        #endregion
 
 
         private void button5_Click(object sender, EventArgs e)
@@ -257,7 +266,7 @@ namespace Bubble
 
         private void button6_Click(object sender, EventArgs e)
         {
-            dm_invoke(EnumCommentType.DEBUG, null, "这是一条测试弹幕");
+            dm_invoke(EnumCommentType.DEBUG, null, "this is a test comment");
         }
 
 
@@ -339,13 +348,9 @@ namespace Bubble
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (File.Exists("setting.ini") == false)
+            if (File.Exists("setting.json") == false)
             {
-                FileStream fs = new FileStream("setting.ini", FileMode.Create);
-                byte[] data = System.Text.Encoding.Default.GetBytes("X=0\r\nY=0\r\nIN=500\r\nKEEP=5000\r\nDIS=500\r\nFONTSIZE=15\r\nWIDTH=200\r\nWELCOME=1\r\nGIFT=1");
-                fs.Write(data, 0, data.Length);
-                fs.Flush();
-                fs.Close();
+                UIUtil.writeSettings();
             }
 
             StreamReader sr = new StreamReader("setting.ini", Encoding.Default);
@@ -364,8 +369,8 @@ namespace Bubble
             sr.Close();
             if (i == 0)
             {
-                //文件错误
-                dm_get(EnumCommentType.SYS, null, "读取配置文件错误 进行初始化");
+                //can get the setting.ini
+                dm_get(EnumCommentType.SYS, null, "Count't read the config documents correctly. Initializing...");
                 File.Delete("setting.ini");
 
                 checkBox1_CheckedChanged(sender, e);
@@ -420,10 +425,10 @@ namespace Bubble
             {
                 gift = 0;
             }
-            
+            UIUtil.writeSettings();
+            //write the setting.ini
 
-
-            System.Environment.Exit(System.Environment.ExitCode);//强制结束
+            System.Environment.Exit(System.Environment.ExitCode);//kill all thread and exit
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -457,6 +462,16 @@ namespace Bubble
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
 
         }

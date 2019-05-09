@@ -9,3 +9,5 @@ c:\users\czh\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubbl
 C:\Users\CZH\documents\visual studio 2015\Projects\Bubble\Bubble\obj\Debug\Bubble.MainForm.resources
 C:\Users\CZH\Documents\Visual Studio 2015\Projects\Bubble\Bubble\bin\Debug\BubbleSilder.exe
 C:\Users\CZH\Documents\Visual Studio 2015\Projects\Bubble\Bubble\bin\Debug\BubbleSilder.pdb
+C:\Users\CZH\Documents\Visual Studio 2015\Projects\Bubble\Bubble\bin\Debug\Newtonsoft.Json.dll
+C:\Users\CZH\Documents\Visual Studio 2015\Projects\Bubble\Bubble\bin\Debug\Newtonsoft.Json.xml

@@ -197,7 +197,7 @@ namespace BubbleSilder
         {
 
         }
-        public void Initialzie(int X, int Y, int IN, int KEEP, int DIS, double FONTSIZE, int WIDTH)
+        public void Initialzie(double X, double Y, int IN, int KEEP, int DIS, double FONTSIZE, int WIDTH)
         {
             this.Top = Y;
             this.Left = X;

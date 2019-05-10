@@ -1,4 +1,5 @@
-﻿using Bubble.util;
+﻿using Bubble.model;
+using Bubble.util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -217,6 +218,7 @@ namespace Bubble
             }
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
             silder.Left = (SystemInformation.WorkingArea.Size.Width) * (double)(hScrollBar1.Value) / ((double)hScrollBar1.Maximum);
+            Setting.sliderX = silder.Left;
             label5.Text = ((double)(hScrollBar1.Value) / ((double)hScrollBar1.Maximum)).ToString();
         }
 
@@ -261,6 +263,7 @@ namespace Bubble
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
 
             silder.Top = (SystemInformation.WorkingArea.Size.Height) * (double)(hScrollBar2.Value) / ((double)hScrollBar2.Maximum);
+            Setting.sliderY = silder.Top;
             label6.Text = ((double)(hScrollBar2.Value) / ((double)hScrollBar2.Maximum)).ToString();
         }
 
@@ -283,6 +286,7 @@ namespace Bubble
             }
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
             silder.animation_in = (int)(((double)hScrollBar3.Value / (double)hScrollBar3.Maximum) * 6000);
+            Setting.shadeInTime = silder.animation_in;
             label10.Text = silder.animation_in.ToString();
         }
 
@@ -296,6 +300,7 @@ namespace Bubble
             }
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
             silder.animation_keep = (int)(((double)hScrollBar4.Value / (double)hScrollBar4.Maximum) * 6000);
+            Setting.existTime = silder.animation_keep;
             label11.Text = silder.animation_keep.ToString();
         }
 
@@ -309,6 +314,7 @@ namespace Bubble
             }
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
             silder.animation_dis = (int)(((double)hScrollBar5.Value / (double)hScrollBar5.Maximum) * 6000);
+            Setting.shadeOutTime = silder.animation_dis;
             label12.Text = silder.animation_dis.ToString();
         }
 
@@ -322,6 +328,7 @@ namespace Bubble
             }
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
             silder.font_size = ((double)hScrollBar6.Value / (double)hScrollBar6.Maximum * 100);
+            Setting.sliderFontSize = silder.font_size;
             label14.Text = silder.font_size.ToString();
         }
 
@@ -335,16 +342,23 @@ namespace Bubble
             }
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
             silder.window_width = (int)((double)hScrollBar7.Value / (double)hScrollBar7.Maximum * 1000);
+            Setting.sliderWitdh = silder.window_width;
             label15.Text = silder.window_width.ToString();
             silder.stackpanel.Width = silder.window_width;
         }
         private void setting_initialize()
         {
-            FileStream fs = new FileStream("setting.ini", FileMode.Create);
-            byte[] data = System.Text.Encoding.Default.GetBytes("X=0\r\nY=0\r\nIN=500\r\nKEEP=5000\r\nDIS=500\r\nFONTSIZE=15\r\nWIDTH=200\r\nWELCOME=1\r\nGIFT=1");
-            fs.Write(data, 0, data.Length);
-            fs.Flush();
-            fs.Close();
+
+            Setting.sliderX = 0;
+            Setting.sliderY = 0;
+            Setting.shadeInTime = 500;
+            Setting.existTime = 5000;
+            Setting.shadeOutTime = 500;
+            Setting.sliderFontSize = 15;
+            Setting.sliderWitdh = 200;
+            Setting.isShownWelcome = true;
+            Setting.isShownGift = true;
+            UIUtil.writeSettings();
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -353,51 +367,23 @@ namespace Bubble
                 UIUtil.writeSettings();
             }
 
-            StreamReader sr = new StreamReader("setting.ini", Encoding.Default);
-
-
-            string line;
-            double[] param = new double[9];
-            int i = 0;
-            while ((line = sr.ReadLine()) != null)
-            {
-
-                param[i] = Convert.ToDouble(line.ToString().Split('=')[1]);
-                i++;
-                Console.WriteLine(line.ToString());
-            }
-            sr.Close();
-            if (i == 0)
-            {
-                //can get the setting.ini
-                dm_get(EnumCommentType.SYS, null, "Count't read the config documents correctly. Initializing...");
-                File.Delete("setting.ini");
-
-                checkBox1_CheckedChanged(sender, e);
-                return;
-            }
-            if (param[7] == 1)
-            {
-                checkBox3.Checked = true;
-            }
-            if (param[8] == 1)
-            {
-                checkBox2.Checked = true;
-            }
-
+            UIUtil.readSettings();
+            checkBox3.Checked = Setting.isShownWelcome;
+            checkBox2.Checked = Setting.isShownGift;
             if (checkBox1.Checked == true)
             {
+
                 var slider = new BubbleSilder.MainWindow();
                 FormUtil.formManager.Add("slider", slider);
-                slider.Initialzie((int)param[0], (int)param[1], (int)param[2], (int)param[3], (int)param[4], param[5], (int)param[6]);
+                slider.Initialzie(Setting.sliderX, Setting.sliderY, Setting.shadeInTime, Setting.existTime, Setting.shadeOutTime, Setting.sliderFontSize, Setting.sliderWitdh);
                 slider.Show();
             }
             else
-            {
+            { 
+
                 Object obj;
                 FormUtil.formManager.TryGetValue("slider", out obj);
                 if (obj == null) return;
-
                 BubbleSilder.MainWindow slider = (BubbleSilder.MainWindow)obj;
                 slider.Close();
                 slider = null;

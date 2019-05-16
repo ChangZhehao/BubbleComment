@@ -433,6 +433,7 @@ namespace Bubble
             BubbleSilder.MainWindow silder = (BubbleSilder.MainWindow)obj;
 
             silder.Initialzie(0, 0, 500, 5000, 500, 15, 200);
+            tabPage4_Enter(sender,e);
 
         }
 

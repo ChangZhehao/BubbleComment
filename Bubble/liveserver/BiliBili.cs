@@ -102,6 +102,10 @@ namespace Bubble
 
         private void recevieMsg()
         {
+            Object obj = null;
+            FormUtil.formManager.TryGetValue("mainForm", out obj);
+            MainForm mainForm = (MainForm)obj;
+
             byte[] stableBuffer = new byte[dmClient.ReceiveBufferSize];
             while (dmClient.Connected)
             {
@@ -136,7 +140,9 @@ namespace Bubble
                     case 1:
                     case 2:
                         {
-                            UInt32 audience = BitConverter.ToUInt32(buffer.Take(4).Reverse().ToArray(), 0); //观众人数
+                            UInt32 audience = BitConverter.ToUInt32(buffer.Take(4).Reverse().ToArray(), 0);
+                            //mainForm.dm_invoke(EnumCommentType.HEART, "", viewerCount.ToString());
+                            mainForm.dm_invoke(EnumCommentType.HEART, "",audience.ToString());
                             Console.WriteLine("the current audience number is: "+audience);
                             break;
                         }
@@ -145,6 +151,7 @@ namespace Bubble
                         {
                             var json = Encoding.UTF8.GetString(buffer, 0, playloadlength);
                             Console.WriteLine(Thread.CurrentThread.ManagedThreadId.ToString() + json);
+                            mainForm.dm_invoke(EnumCommentType.MSG, "", json.ToString());
                             break;
                         }
                     case 5://newScrollMessage

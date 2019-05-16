@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bubble.model;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,7 +38,12 @@ namespace Bubble
 
         public async void run()
         {
+            getViewrCount();
             bool result = await connect();
+
+            Thread getViewrThread = new Thread(loopToGetViewrCount);
+            getViewrThread.Start();
+
 
         }
         /// <summary>
@@ -103,5 +110,46 @@ namespace Bubble
         {
             dmClient.Close();
         }
+
+        private void loopToGetViewrCount()
+        {
+            Object obj = null;
+
+            FormUtil.formManager.TryGetValue("mainForm", out obj);
+            MainForm mainForm = (MainForm)obj;
+
+            while (true)
+            {
+
+                int viewerCount = getViewrCount();
+                mainForm.dm_invoke(EnumCommentType.HEART,"",viewerCount.ToString());
+                Thread.Sleep(10000);
+            }
+        }
+
+        private int getViewrCount()
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.twitch.tv/kraken/streams/"+roomId);
+            request.Method = "GET";
+            request.ContentType = "text/html;charset=UTF-8";
+            request.UserAgent = null;
+            request.Headers.Add("Client-ID", "5kw217mse7lux1wklk19hf7qr0yn6e");
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream myResponseStream = response.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+            string retString = myStreamReader.ReadToEnd();
+            myStreamReader.Close();
+            myResponseStream.Close();
+
+
+
+            TwitchInfo info = JsonConvert.DeserializeObject<TwitchInfo>(retString.Trim());
+
+
+            return info.stream.viewers;
+        }
+
     }
+
 }

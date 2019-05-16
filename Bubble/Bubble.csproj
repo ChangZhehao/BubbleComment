@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="model\EnumCommentType.cs" />
     <Compile Include="model\Setting.cs" />
+    <Compile Include="model\TwitchInfo.cs" />
     <Compile Include="util\LiveServerUtil.cs" />
     <Compile Include="liveserver\BiliBili.cs" />
     <Compile Include="liveserver\LiveServerImp.cs" />
